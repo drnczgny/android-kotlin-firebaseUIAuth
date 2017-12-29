@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.adrian.firebaseUI">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,18 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.adrian.firebaseUI.ui.main.view.MainActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"
+            tools:replace="android:value"/>
+
+        <activity android:name="com.adrian.firebaseUI.ui.main.view.MainActivity"/>
         <activity android:name="com.adrian.firebaseUI.ui.main.JsonPlaceholderActivity" />
-        <activity
-            android:name="com.adrian.firebaseUI.ui.signup.view.SignupActivity"
-            android:label="@string/title_activity_signup"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name="com.adrian.firebaseUI.ui.login.view.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.adrian.firebaseUI.ui.resetpasswordactivity.view.ResetPasswordActivity"></activity>
     </application>
 
 </manifest>
