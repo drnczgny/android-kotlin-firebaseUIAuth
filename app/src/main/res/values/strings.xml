@@ -36,7 +36,8 @@
     <string name="already_create_account_with_this_email">Someone with this email has already created an account, please try a different login method</string>
 
     <!-- FACEBOOK SDK -->
-    <string name="facebook_app_id">155625125212028</string>
+    <string name="facebook_app_id">2438242956399930</string>
+    <string name="fb_login_protocol_scheme">fb2438242956399930</string>
 
     <!-- FIREBASE UI -->
     <string name="unknown_response">Unexpected onActivityResult response code</string>

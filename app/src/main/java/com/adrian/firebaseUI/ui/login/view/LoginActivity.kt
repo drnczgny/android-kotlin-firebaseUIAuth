@@ -11,6 +11,7 @@ import android.util.Log
 import android.widget.Toast
 import com.adrian.firebaseUI.R
 import com.adrian.firebaseUI.ui.main.view.MainActivity
+import com.facebook.CallbackManager
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.ErrorCodes
 import com.firebase.ui.auth.IdpResponse
@@ -32,8 +33,30 @@ class LoginActivity : AppCompatActivity() {
 
     val firebaseAuth = FirebaseAuth.getInstance()
 
+    val callbackManager = CallbackManager.Factory.create();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AndroidInjection.inject(this)
+        setContentView(R.layout.activity_login)
+
+
+        btnFirebaseUI.setOnClickListener {
+            startActivityForResult(
+                    AuthUI.getInstance().createSignInIntentBuilder()
+//                            .setTheme(getSelectedTheme())
+                            .setTheme(R.style.AuthStyle)
+//                            .setLogo(getSelectedLogo())
+                            .setAvailableProviders(getSignInProviders())
+                            .setTosUrl("https://eurobarca.com")
+//                            .setPrivacyPolicyUrl(getSelectedPrivacyPolicyUrl())
+                            .setIsSmartLockEnabled(false, true)
+                            .setAllowNewEmailAccounts(true)
+                            .build(),
+                    RC_SIGN_IN)
+        }
+
 
         try {
             val info = packageManager.getPackageInfo(
@@ -50,31 +73,13 @@ class LoginActivity : AppCompatActivity() {
 
         }
 
-
-        AndroidInjection.inject(this)
-        setContentView(R.layout.activity_login)
-
-
-        btnFirebaseUI.setOnClickListener {
-            startActivityForResult(
-                    AuthUI.getInstance().createSignInIntentBuilder()
-//                            .setTheme(getSelectedTheme())
-//                            .setLogo(getSelectedLogo())
-                            .setAvailableProviders(getSignInProviders())
-//                            .setTosUrl(getSelectedTosUrl())
-//                            .setPrivacyPolicyUrl(getSelectedPrivacyPolicyUrl())
-                            .setIsSmartLockEnabled(false, true)
-                            .setAllowNewEmailAccounts(true)
-                            .build(),
-                    RC_SIGN_IN)
-        }
     }
 
     private fun getSignInProviders(): MutableList<AuthUI.IdpConfig> {
         val selectedProviders = ArrayList<AuthUI.IdpConfig>()
+        selectedProviders.add(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build())
         selectedProviders.add(AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).setPermissions(getGooglePermissions()).build())
         selectedProviders.add(AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).setPermissions(getFacebookPermissions()).build())
-        selectedProviders.add(AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build())
 //        selectedProviders.add(AuthUI.IdpConfig.Builder(AuthUI.TWITTER_PROVIDER).build())
 //        selectedProviders.add(AuthUI.IdpConfig.Builder(AuthUI.PHONE_VERIFICATION_PROVIDER).build())
         return selectedProviders
@@ -87,17 +92,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        callbackManager.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             handleSignInResponse(resultCode, data)
             return
+        }
+        if(resultCode == RESULT_CANCELED){
+            toast("Unsuccessful singed in");
         }
 
         showSnackbar(R.string.unknown_response)
     }
 
-    private fun handleSignInResponse(resultCode: Int, data: Intent) {
+    private fun handleSignInResponse(resultCode: Int, data: Intent?) {
         val response = IdpResponse.fromResultIntent(data)
 
         // Successfully signed in
@@ -153,6 +162,10 @@ class LoginActivity : AppCompatActivity() {
 
     private fun toast(stringId: Int) {
         Toast.makeText(this, resources.getString(stringId), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun toast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun showSnackbar(@StringRes errorMessageRes: Int) {

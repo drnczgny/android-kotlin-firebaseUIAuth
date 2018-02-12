@@ -17,4 +17,41 @@
     <color name="btn_login_bg">#eceef1</color>
     <color name="lbl_name">#333333</color>
     <color name="btn_logut_bg">#ff6861</color>
+
+
+    <color name="material_green_50">#E8F5E9</color>
+    <color name="material_green_500">#4CAF50</color>
+    <color name="material_green_700">#388E3C</color>
+    <color name="material_green_a200">#69F0AE</color>
+    <color name="material_lime_a700">#AEEA00</color>
+    <color name="material_purple_a700">#AA00FF</color>
+
+
+    <color name="primary_light">#E0E0E0</color>
+    <color name="primary">#757575</color>
+    <color name="primary_dark">#424242</color>
+
+    <color name="primary_detail">#A0A0A0</color>
+    <color name="primary_transparent">#80000000</color>
+    <color name="primary_semi_transparent">#af000000</color>
+
+    <color name="accent">#26a69a</color>
+    <color name="primary_text">#212121</color>
+    <color name="primary_text_negative">#f9f9f9</color>
+    <color name="secondary_text">#727272</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="colorAccentDark">#0b1039</color>
+
+
+    <color name="aqua">#00FFFF</color>
+    <color name="brown">#A52A2A</color>
+    <color name="yellow">#FFFF00</color>
+    <color name="greenyellow">#ADFF2F</color>
+    <color name="whitesmoke">#F5F5F5</color>
+
+    <color name="login_page_bg">#EEEEEE</color>
+
+
+    <!--<color name="fui_bgEmail">@color/white</color>-->
+
 </resources>
